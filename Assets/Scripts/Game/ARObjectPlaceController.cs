@@ -1,3 +1,4 @@
+using Messaging;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,5 +32,10 @@ public class ARObjectPlaceController : MonoBehaviour
         var firstHitPose = _hitResults[0].pose;
 
         Instantiate(_selectedObjectToPlace, firstHitPose.position, firstHitPose.rotation);
+        MessageBus.Get().Publish(new ToastMessage
+        {
+            title = "Object placed",
+            message = $"At location {firstHitPose.position}"
+        });
     }
 }

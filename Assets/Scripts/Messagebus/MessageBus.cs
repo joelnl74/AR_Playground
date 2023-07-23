@@ -12,8 +12,8 @@ namespace Messaging
         /// <summary>
         /// Collection containing all subscribers for a type of message.
         /// </summary>
-        private readonly Dictionary<Type, List<WeakReference>> _subscribers = new();
-        private readonly object _lockObject = new();
+        private readonly Dictionary<Type, List<WeakReference>> _subscribers = new Dictionary<Type, List<WeakReference>>();
+        private readonly object _lockObject = new object();
 
         /// <summary>
         /// Publish a message.
@@ -23,7 +23,7 @@ namespace Messaging
             Type subscriberType = typeof(ISubscriber<>).MakeGenericType(typeof(T));
 
             List<WeakReference> subscribers = GetSubscriberList(subscriberType);
-            List<WeakReference> subsToRemove = new();
+            List<WeakReference> subsToRemove = new List<WeakReference>();
 
             for (int i = 0; i < subscribers.Count; i++)
             {
@@ -65,7 +65,7 @@ namespace Messaging
                         .GetInterfaces()
                         .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ISubscriber<>));
 
-                WeakReference weakRef = new(subscriber);
+                WeakReference weakRef = new WeakReference(subscriber);
 
                 foreach (Type subscriberType in subscriberTypes)
                 {
