@@ -1,8 +1,9 @@
 using Messaging;
-using System.Collections;
+using UnityEngine.XR.ARFoundation;
+using Unity.XR.CoreUtils;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 public class ARObjectPlaceController : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class ARObjectPlaceController : MonoBehaviour
         }
 
         var touch = Input.GetTouch(0);
-        _rayCastManager.Raycast(touch.position, _hitResults, UnityEngine.XR.ARSubsystems.TrackableType.PlaneWithinPolygon);
+        _rayCastManager.Raycast(touch.position, _hitResults, TrackableType.PlaneWithinPolygon);
 
         if (_hitResults.Count <= 0)
         {
