@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Assert = NUnit.Framework.Assert;
 
+#if UNITY_EDITOR
 namespace Messaging.test
 {
     public class MessageBusTests
@@ -105,3 +106,4 @@ namespace Messaging.test
         }
     }
 }
+#endif
